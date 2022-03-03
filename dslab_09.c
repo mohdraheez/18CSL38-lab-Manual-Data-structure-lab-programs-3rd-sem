@@ -141,7 +141,7 @@ NODE add(NODE poly1,NODE poly2)
         else
         {
             insert_poly(startb->coef,startb->expox,startb->expoy,startb->expoz,polysum);
-            starta=starta->next;
+            startb=startb->next;
         }
     }
     while(poly1!=starta)
@@ -153,7 +153,7 @@ NODE add(NODE poly1,NODE poly2)
     while(poly2!=startb)
     {
         insert_poly(startb->coef,startb->expox,startb->expoy,startb->expoz,polysum);
-        starta=starta->next;
+        startb=startb->next;
     }
     return polysum;
 }
