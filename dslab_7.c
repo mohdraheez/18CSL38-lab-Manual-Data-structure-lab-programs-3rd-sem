@@ -42,6 +42,7 @@ void insert_front()
     if(head=='\0')
     {
         head=temp;
+        head->next=NULL;
     }
     else
     {
@@ -66,7 +67,7 @@ void insert_rear()
             cur=cur->next;
         }
         cur->next=temp;
-        cur=temp;
+        temp->next=NULL;
     }
     count++;
 }
