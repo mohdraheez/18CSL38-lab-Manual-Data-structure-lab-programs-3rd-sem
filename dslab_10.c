@@ -70,30 +70,7 @@ void postorder(NODE temp)
         printf("%d ",temp->data);
     }
 }
-void display(NODE root,int level)
-{
-    if(root==NULL)
-    {
-        return;
-    }
-    else
-    {
-        display(root->rchild,level++);
-        if(level>0){
-        for(int i=0;i<level;i++){
-            printf("    ");
-        }
-         printf("%d\n",root->data);
-        }else{
-            printf("        ");
 
-            printf("%d\n",root->data);
-        }
-         
-    display(root->lchild,level=level-2);
-    }
-   
-}
 NODE search(int item,NODE root)
 {
     if(root==NULL)
@@ -119,7 +96,7 @@ void main()
     NODE root=NULL,newnode=NULL;
     while(1)
     {
-        printf("\n1.BST\n2.traversal of BST\n3.display\n4.search\n");
+        printf("\n1.BST\n2.traversal of BST\n3.search\n4.exit\n");
         scanf("%d",&choice);
         switch(choice)
         {
@@ -157,9 +134,7 @@ void main()
 
             }
             break;
-            case 3:display(root,5);
-            break;
-            case 4:
+            case 3:
             printf("Enter the element to be searched\n");
             scanf("%d",&item);
             NODE cur=search(item,root);
@@ -169,6 +144,8 @@ void main()
             else{
                 printf("item found\n");
             }
+            break;
+            case 4:exit(0);
             break;
             default:printf("invalid choice\n");
             break;
