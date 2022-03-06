@@ -1,11 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
-int n,key,m,*ht,count=0,i,flag=0,hi;
+int n,m,*ht,count=0,i,flag=0,hi;
 void createHT();
 void insertHT(int key);
 void displayHT();
 void main()
 {
+    int key;
     printf("Enter value of n\n");
     scanf("%d",&n);
     printf("Enter 2 digit memory location\n");
