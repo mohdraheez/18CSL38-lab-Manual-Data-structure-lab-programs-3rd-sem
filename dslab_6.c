@@ -29,16 +29,15 @@ void delete()
     }
     else
     {
+        printf("deleted element is %c\n",queue[front]);
         if(front==rear)
         {
             front=rear=-1;
         }
         else
-        {
-        printf("deleted element is %c\n",queue[front]);
-        front=(front+1)%max;
+        {   
+            front=(front+1)%max;
         }
-
     }
 }
 void display()
