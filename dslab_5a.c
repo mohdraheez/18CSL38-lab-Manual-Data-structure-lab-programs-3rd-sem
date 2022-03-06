@@ -4,8 +4,8 @@
 #include<math.h>
 #define max 20
 
-char stack[max],postfix[100],top=-1,ch;
-int i=0,op1,op2;
+char stack[max],postfix[100],ch;
+int i=0,op1,op2,top=-1;
 
 void push(int elem)
 {
