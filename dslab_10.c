@@ -81,7 +81,7 @@ NODE search(int item,NODE root)
             if(cur->data==item){
                 return cur;
             }
-            else if(item>root->data){
+            else if(item>cur->data){
                 cur=cur->rchild;
             }
             else{
