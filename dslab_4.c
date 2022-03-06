@@ -77,7 +77,7 @@ void main()
             {
                 p++;
             }
-            while(precidence(stack[top])>p)
+            while(precidence(stack[top])>=p)
             {
                 postfix[j++]=pop();
             }
