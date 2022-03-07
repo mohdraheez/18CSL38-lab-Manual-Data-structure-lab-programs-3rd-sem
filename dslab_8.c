@@ -57,8 +57,8 @@ void insert_front()
     }
     else{
 
-        temp->rlink=head;
-        head->llink=temp;
+        head->rlink=temp;
+        temp->llink=head;
         head=temp;
         
     }
