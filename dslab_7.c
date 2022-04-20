@@ -42,7 +42,6 @@ void insert_front()
     if(head=='\0')
     {
         head=temp;
-        head->next=NULL;
     }
     else
     {
