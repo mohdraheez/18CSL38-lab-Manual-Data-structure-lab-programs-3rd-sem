@@ -1,17 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include<malloc.h>
-struct node {
-    int coef,expox,expoy,expoz;
+
+struct node{
+    int expox,expoy,expoz,coef;
     struct node *next;
 };
+
 typedef struct node *NODE;
 
-NODE insert_poly(int c,int x,int y,int z,NODE head);
-NODE create_node(int c,int x,int y,int z);
-
-NODE create_head()
+NODE createHead()
 {
     NODE temp=(NODE)malloc(sizeof(struct node));
     temp->coef=0;
@@ -22,48 +20,7 @@ NODE create_head()
     return temp;
 }
 
-NODE create_poly(NODE poly1)
-{
-    int x,y,z,c,n,i;
-    printf("enter number of terms in polynomial\n");
-    scanf("%d",&n);
-    for(i=0;i<n;i++)
-    {
-        printf("Enter the coefficient\n");
-        scanf("%d",&c);
-        printf("Enter the expo of x\n");
-        scanf("%d",&x);
-        printf("Enter the expo of y\n");
-        scanf("%d",&y);
-        printf("enter the expo of z\n");
-        scanf("%d",&z);
-        insert_poly(c,x,y,z,poly1);
-    }
-        return poly1;
-}
-
-NODE insert_poly(int c,int x,int y,int z,NODE head)
-{
-    NODE temp=create_node(c,x,y,z);
-    if(head->next==head)
-    {
-        head->next=temp;
-        temp->next=head;
-    }
-    else{
-        NODE cur=head;
-        while(cur->next!=head)
-        {
-            cur=cur->next;
-        }
-        cur->next=temp;
-        temp->next=head;
-    }
-    head->coef=((head->coef)+1);
-    return head;
-}
-
-NODE create_node(int c,int x,int y,int z)
+NODE createpoly(int c,int x,int y,int z)
 {
     NODE temp=(NODE)malloc(sizeof(struct node));
     temp->coef=c;
@@ -73,116 +30,144 @@ NODE create_node(int c,int x,int y,int z)
     temp->next=NULL;
     return temp;
 }
-void display(NODE head)
+
+void insert_poly(int c,int x,int y,int z,NODE poly)
 {
-    if(head->next==head)
-    {
-        printf("list is empty\n");
+    NODE temp=createpoly(c,x,y,z);
+    if(poly->next==poly){
+        poly->next=temp;
+        temp->next=poly;
     }
     else{
-    NODE temp=head->next;
-    while(temp!=head){
-        if(temp->coef<0)
-        printf("%dx^%dy^%dz^%d ",temp->coef,temp->expox,temp->expoy,temp->expoz);
-        else
-        printf("+%dx^%dy^%dz^%d ",temp->coef,temp->expox,temp->expoy,temp->expoz);
-        temp=temp->next;
-    }
-    }
- 
-}
-double evaluate(int x,int y,int z,NODE poly)
-{
-    double value;
-    if(poly==poly->next)
-    {
-        printf("list is empty\n");
-    }
-    else{
-        NODE temp=poly;
-        while(temp->next!=poly){
-            temp=temp->next;
-            value=value+(temp->coef)*(pow(x,temp->expox))*(pow(y,temp->expoy))*(pow(z,temp->expoz));
+        NODE cur=poly;
+        while(cur->next!=poly)
+        {
+            cur=cur->next;
         }
-        return value;
+        cur->next=temp;
+        temp->next=poly;
     }
+    poly->coef=(poly->coef+1);
+
+}
+
+void display(NODE poly)
+{
+    if(poly->next==poly){
+        printf("polynomial is empty\n");
+    }
+    else{
+        NODE cur = poly->next;
+        while(cur!=poly){
+            if(cur->coef>0){
+                printf("+");
+            }
+            printf("%dx^%dy^%dz^%d ",cur->coef,cur->expox,cur->expoy,cur->expoz);
+            cur=cur->next;
+        }
+        printf("Total number of terms :%d\n",poly->coef);
+    }
+}
+
+NODE createnode(NODE poly)
+{
+    int x,y,z,c,n;
+    printf("Enter number of terms\n");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        printf("Enter value of coef\n");
+        scanf("%d",&c);
+        printf("Enter expo of x\n");
+        scanf("%d",&x);
+        printf("Enter expo of y\n");
+        scanf("%d",&y);
+        printf("Enter expo of z\n");
+        scanf("%d",&z);
+        insert_poly(c,x,y,z,poly);
+    }
+    return poly;
+}
+
+double evaluate(NODE poly,int x,int y,int z)
+{
+    double value=0;
+    if(poly->next==poly){
+        printf("polynomial is empty\n");
+    }
+    else{
+        NODE cur=poly->next;
+        while(cur!=poly){
+           
+            value=value+((cur->coef)*(pow(x,cur->expox))*pow(y,cur->expoy)*pow(z,cur->expoz));
+             cur=cur->next;
+            
+        }
+    }
+    return value;
 }
 
 NODE add(NODE poly1,NODE poly2)
 {
-    NODE starta=poly1->next,startb=poly2->next,polysum;
-    polysum=create_head();
-    int sum;
-    while((starta!=poly1) && (startb!=poly2))
-    {
-        if(starta->expox==startb->expox && starta->expoy==startb->expoy && starta->expoz==startb->expoz)
-        {
-            sum=starta->coef+startb->coef;
-            insert_poly(sum,starta->expox,starta->expoy,starta->expoz,polysum);
-            starta=starta->next;
-            startb=startb->next;
+    NODE a=poly1->next,b=poly2->next,polysum;
+    polysum=createHead();
+    int sum=0;
+    while((a!=poly1)&&(b!=poly2)){
+        if((a->expox==b->expox)&&(a->expoy==b->expoy)&&(a->expoz==b->expoz)){
+            sum=a->coef+b->coef;
+            insert_poly(sum,a->expox,a->expoy,a->expoz,polysum);
+            a=a->next;
+            b=b->next;
         }
-        else if(starta->expox>startb->expox && starta->expoy==startb->expoy && starta->expoz==startb->expoz)
-        {
-            insert_poly(starta->coef,starta->expox,starta->expoy,starta->expoz,polysum);
-            starta=starta->next;
-
+        else if(a->expox>b->expox){
+            insert_poly(a->coef,a->expox,a->expoy,a->expoz,polysum);
+            a=a->next;
         }
-        else if(starta->expox>startb->expox && starta->expoy>startb->expoy && starta->expoz==startb->expoz)
-        {
-            insert_poly(starta->coef,starta->expox,starta->expoy,starta->expoz,polysum);
-            starta=starta->next;
+        else if(a->expox==b->expox && a->expoy>b->expoy){
+            insert_poly(a->coef,a->expox,a->expoy,a->expoz,polysum);
+            a=a->next;
         }
-        else if(starta->expox>startb->expox && starta->expoy>startb->expoy && starta->expoz>startb->expoz)
-        {
-            insert_poly(starta->coef,starta->expox,starta->expoy,starta->expoz,polysum);
-            starta=starta->next;
+        else if(a->expox==b->expox && a->expoy==b->expoy && a->expoz>b->expoz){
+            insert_poly(a->coef,a->expox,a->expoy,a->expoz,polysum);
+            a=a->next;
         }
-        else
-        {
-            insert_poly(startb->coef,startb->expox,startb->expoy,startb->expoz,polysum);
-            startb=startb->next;
+        else{
+            insert_poly(b->coef,b->expox,b->expoy,b->expoz,polysum);
+            b=b->next;
         }
     }
-    while(poly1!=starta)
-    {
-        insert_poly(starta->coef,starta->expox,starta->expoy,starta->expoz,polysum);
-            starta=starta->next;
-
+    while(a!=poly1){
+        insert_poly(a->coef,a->expox,a->expoy,a->expoz,polysum);
+            a=a->next;
     }
-    while(poly2!=startb)
-    {
-        insert_poly(startb->coef,startb->expox,startb->expoy,startb->expoz,polysum);
-        startb=startb->next;
+    while(b!=poly2){
+        insert_poly(b->coef,b->expox,b->expoy,b->expoz,polysum);
+            b=b->next;
     }
+    
     return polysum;
 }
+
 void main()
 {
-    NODE poly1,poly2,polysum;   
+    NODE poly1,poly2,polysum=NULL;
     int x,y,z;
-    double value;
-    poly1=create_head();
-    poly1=create_poly(poly1);
-    printf("Enter value of x\n");
-    scanf("%d",&x);
-    printf("Enter value of y\n");
-    scanf("%d",&y);
-    printf("Enter value of z\n");
-    scanf("%d",&z);
-    value = evaluate(x,y,z,poly1);
-    printf("value after evaluation is %lf\n",value);
+    double value=0;
+    poly1=createHead();
+    poly1=createnode(poly1);
     display(poly1);
+    printf("Enter value for x,y,z\n");
+    scanf("%d%d%d",&x,&y,&z);
+    value=evaluate(poly1,x,y,z);
+    printf("After evaluation value: %lf\n",value);
     free(poly1);
     poly1=NULL;
-    poly1=create_head();
-    poly1=create_poly(poly1);
+    poly1=createHead();
+    poly1=createnode(poly1);
     display(poly1);
-    poly2=create_head();
-    poly2=create_poly(poly2);
+    poly2=createHead();
+    poly2=createnode(poly2);
     display(poly2);
-    printf("sum is \n");
+    printf("sum is\n");
     polysum=add(poly1,poly2);
     display(polysum);
-    printf("thank you\n");
-}
+}   
