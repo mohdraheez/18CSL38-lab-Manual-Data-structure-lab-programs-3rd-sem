@@ -19,9 +19,6 @@ NODE getnode()
 
     NODE temp=(NODE)malloc(sizeof(struct node));
 
-    temp->llink=NULL;
-    temp->rlink=NULL;
-
     return temp;
 
 }
@@ -42,6 +39,8 @@ NODE create()
 
     printf("Enter salary\n");
     scanf("%s",temp->salary);
+    temp->llink=NULL;
+    temp->rlink=NULL;
 
     return temp;
 
@@ -57,8 +56,8 @@ void insert_front()
     }
     else{
 
-        head->rlink=temp;
-        temp->llink=head;
+        temp->rlink=head;
+        head->llink=temp;
         head=temp;
         
     }
@@ -90,7 +89,7 @@ void insert_end()
 
 void delete_front()
 {
-    if(count==0){
+    if(head==NULL){
 
         printf("List is empty\n");
     }
@@ -100,26 +99,21 @@ void delete_front()
 
         printf("Deleted node is :SSN: %s Name: %s Department: %s Salary: %s\n",temp->ssn,temp->name,temp->dept,temp->salary);
         
-        if(head->rlink==NULL){
-
-            free(head);
-            head=NULL;
-        }
-        else{
-            free(head);
-            head=NULL;
-            head=temp->rlink;
+        free(head);
+        head=NULL;
+        head=temp->rlink;
+        if(temp->rlink!=NULL){
             temp->rlink=NULL;
             head->llink=NULL;
         }
-
+        count--;
     }
-    count--;
+    
 }
 
 void delete_end()
 {
-    if(count==0){
+    if(head==NULL){
 
         printf("List is empty\n");
 
@@ -144,10 +138,10 @@ void delete_end()
         temp->llink->rlink=NULL;
         temp->llink=NULL;
         free(temp);
-        
+        count--;
     }
     }
-    count--;
+    
 
 }
 
@@ -170,31 +164,37 @@ void display()
 
 void main()
 {
-    int choice;
+    int choice,n,i;
 
     while(1){
 
-        printf("\nMake a choice\n1.Insert Front\n2.Insert End\n3.Delete Front\n4.Delete End\n5.Display\n6.Exit\n");
+        printf("\nMake a choice\n1.Create\n2.Insert Front\n3.Insert End\n4.Delete Front\n5.Delete End\n6.Display\n7.Exit\n");
         scanf("%d",&choice);
 
         switch(choice){
 
-            case 1: insert_front();
+            case 1:printf("Enter the number of nodes\n");
+            scanf("%d",&n);
+            for(i=0;i<n;i++){
+                insert_end();
+            }
+            break;
+            case 2: insert_front();
             break;
 
-            case 2: insert_end();
+            case 3: insert_end();
             break;
 
-            case 3:delete_front();
+            case 4:delete_front();
             break;
 
-            case 4:delete_end();
+            case 5:delete_end();
             break;
 
-            case 5: display();
+            case 6: display();
             break;
 
-            case 6: exit(0);
+            case 7: exit(0);
             break;
 
             default:printf("Invalid choice\n");
