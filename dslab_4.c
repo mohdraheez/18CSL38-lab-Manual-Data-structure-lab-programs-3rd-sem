@@ -2,8 +2,8 @@
 #include<stdlib.h>
 #include<ctype.h>
 #define max 20
-char postfix[30],infix[30],c,elem;
-int stack[max],top=-1,i=0,j=0,flag;
+char stack[max],postfix[30],infix[30],c,elem;
+int top=-1,i=0,j=0,flag;
 int precidence(char ch)
 {
     switch(ch)
