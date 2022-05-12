@@ -20,9 +20,9 @@ int precidence(char ch)
         break;
         case '/':return 3;
         break;
-        case '%':return 4;
+        case '%':return 3;
         break;
-        case '^':return 5;
+        case '^':return 4;
         break;
         default:printf("wrong expression\n");
         exit(0);
